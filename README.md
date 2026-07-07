@@ -2,6 +2,12 @@
 
 A Claude Code skill that turns a live website into `design.md` — a replication-grade spec of its look and motion. Pipeline: crawl (template-deduped, up to ~6 pages) → screenshot 3 breakpoints + full-page + scroll frames → extract computed styles, color palette, CSS `@keyframes`, and live `getAnimations()` data → Claude reads it all and writes `design.md`.
 
+## Showcase
+
+The workflow and a real `design.md` (scanned from stripe.com), rendered on one page — [`index.html`](index.html), styled entirely with the tokens the skill extracted from Stripe:
+
+[![design-scan showcase — workflow and rendered stripe.com output](examples/showcase.png)](examples/showcase.png)
+
 ## Install
 
 Requires **Node 18+** and **Claude Code**. One command, in the project where you want the skill:
