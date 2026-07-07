@@ -1,0 +1,14 @@
+{
+  "name": "design-scan",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "design-scan": "scripts/scan.mjs"
+  },
+  "scripts": {
+    "scan": "node scripts/scan.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.61.1"
+  }
+}
