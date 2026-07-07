@@ -2,43 +2,33 @@
 
 A Claude Code skill that turns a live website into `design.md` — a replication-grade spec of its look and motion. Pipeline: crawl (template-deduped, up to ~6 pages) → screenshot 3 breakpoints + full-page + scroll frames → extract computed styles, color palette, CSS `@keyframes`, and live `getAnimations()` data → Claude reads it all and writes `design.md`.
 
-## Usage
-
-In Claude Code:
-
-```
-/design-scan https://linear.app
-```
-
-Claude runs the bundled Playwright scanner, reads the screenshots and extracted data, and writes `design.md` into your current project (plus a `design-scan-output/` folder with the raw screenshots and JSON).
-
 ## Install
 
-Requires **Node 18+** and **Claude Code**.
-
-One command, no cloning:
+Requires **Node 18+** and **Claude Code**. One command, in the project where you want the skill:
 
 ```
 npx skills add Shawnchee/design-scan
 ```
 
-That installs the skill into the current project's `.claude/skills/`. Add `-g` to install user-wide (available in every project) instead:
+Or add `-g` to install it user-wide, so it's available in every project:
 
 ```
 npx skills add Shawnchee/design-scan -g
 ```
 
+That's it — **no other setup**. You don't need to install Playwright or anything else yourself: the first time you run the skill, Claude installs the scanner's dependencies for you (a one-time ~300MB Chromium download, takes a minute or two). Every run after that starts instantly.
+
 <details>
-<summary>Manual install (git clone)</summary>
+<summary>Manual install (git clone) and optional pre-install</summary>
+
+Install without the `skills` CLI:
 
 ```
 git clone https://github.com/Shawnchee/design-scan
 ln -s "$PWD/design-scan/skills/design-scan" ~/.claude/skills/design-scan
 ```
 
-</details>
-
-On first run, Claude installs the scanner's dependencies automatically. To pre-install them yourself:
+If you'd rather not wait on the first run, pre-install the dependencies yourself:
 
 ```
 cd ~/.claude/skills/design-scan   # or .claude/skills/design-scan in your project
@@ -46,7 +36,19 @@ npm install
 npx playwright install chromium
 ```
 
-The `playwright install chromium` step downloads a ~300MB browser once.
+</details>
+
+## Use
+
+Start Claude Code and give it a URL:
+
+```
+/design-scan https://linear.app
+```
+
+Claude runs the bundled Playwright scanner (typically 1–4 minutes: it crawls up to ~6 pages, screenshots each at 3 breakpoints plus full-page and scroll frames, and extracts the design data), then reads the results and writes `design.md` into your current project, alongside a `design-scan-output/` folder with the raw screenshots and JSON.
+
+Plain-language asks work too — "scan stripe.com and make a design.md" or "replicate this website's design: <url>".
 
 ## What you get
 
