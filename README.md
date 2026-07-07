@@ -16,23 +16,32 @@ Claude runs the bundled Playwright scanner, reads the screenshots and extracted 
 
 Requires **Node 18+** and **Claude Code**.
 
-Clone directly into your skills directory:
+One command, no cloning:
 
 ```
-git clone https://github.com/<you>/design-scan ~/.claude/skills/design-scan
+npx skills add Shawnchee/design-scan
 ```
 
-Or clone anywhere and symlink it in:
+That installs the skill into the current project's `.claude/skills/`. Add `-g` to install user-wide (available in every project) instead:
 
 ```
-git clone https://github.com/<you>/design-scan
-ln -s "$PWD/design-scan" ~/.claude/skills/design-scan
+npx skills add Shawnchee/design-scan -g
 ```
 
-Then install the scanner's dependencies (Claude also does this automatically on first run):
+<details>
+<summary>Manual install (git clone)</summary>
 
 ```
-cd ~/.claude/skills/design-scan
+git clone https://github.com/Shawnchee/design-scan
+ln -s "$PWD/design-scan/skills/design-scan" ~/.claude/skills/design-scan
+```
+
+</details>
+
+On first run, Claude installs the scanner's dependencies automatically. To pre-install them yourself:
+
+```
+cd ~/.claude/skills/design-scan   # or .claude/skills/design-scan in your project
 npm install
 npx playwright install chromium
 ```
@@ -62,7 +71,7 @@ The scanner reads **computed styles** and calls **`getAnimations()`** in the pag
 The scanner is a plain Node script, so any agent (Codex, etc.) or a human can run it directly:
 
 ```
-node scripts/scan.mjs <url> [--out <dir>] [--max-pages <n>] [--scroll-frames <n>]
+node skills/design-scan/scripts/scan.mjs <url> [--out <dir>] [--max-pages <n>] [--scroll-frames <n>]
 ```
 
 Defaults: `--out ./design-scan-output/<hostname>`, `--max-pages 6`, `--scroll-frames 8`. Point your agent at the resulting `scan.json` and the screenshots under `pages/<slug>/` and ask it to write the spec.
